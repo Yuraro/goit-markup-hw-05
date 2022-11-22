@@ -86,20 +86,85 @@ body{
 
 
 .header-nav-link {
+    position: relative;
+
     font-weight: 500;
     font-size: 14px;
     line-height: 1.1428;
     letter-spacing: 0.02em;
     color: var(--title-color);
     text-decoration: none;
+    padding-bottom: 32px;
+
     transition-property: color;
     transition-duration: var(--t-d);
     transition-timing-function: var(--t-t-f);
 }
+
 .header-nav-link:hover,
-.header-nav-link:focus{
+.header-nav-link:focus {
     color: var(--blue-active-color);
 }
+
+.header-is-active{
+    position: relative;
+
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.1428;
+    letter-spacing: 0.02em;
+    color: var(--blue-active-color);
+    text-decoration: none;
+    padding-bottom: 32px;
+}
+
+.non-active{}
+
+.non-active::after{
+    content:"";
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 4px;
+    background: var(--blue-active-color);
+    border-radius: 2px;
+
+    opacity: 0;
+
+    transition-property: opacity;
+    transition-duration: var(--t-d);
+    transition-timing-function: var(--t-t-f);
+}
+
+.non-active:hover::after,
+.non-active:focus::after {
+    opacity: 1;
+}
+
+.is-active{}
+
+.is-active::after {
+    content:"";
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 4px;
+    background: var(--blue-active-color);
+    border-radius: 2px;
+    display: block;
+
+
+    transition-property: opacity;
+    transition-duration: var(--t-d);
+    transition-timing-function: var(--t-t-f);
+}
+
 
 .header-nav-list {
     display: flex;
@@ -602,26 +667,27 @@ box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06), 1p
 
 .portfolio-list:hover .portfolio-uptext,
 .portfolio-list:focus .portfolio-uptext {
-opacity: 1;
+transform: translateY(0%);
 }
-.portfolio-list:hover .portfolio-block::before,
-.portfolio-list:focus .portfolio-block::before{
-opacity: 1;
+.portfolio-list:hover .portfolio-block::after,
+.portfolio-list:focus .portfolio-block::after{
+transform: translateY(-100%);
 }
 
 .portfolio-block {
     position: relative;
+    overflow: hidden;
 }
 
-.portfolio-block::before {
+.portfolio-block::after {
     content: "";
     position: absolute;
     background-color: rgba(33, 150, 243, 0.9);
     width: 100%;
     height: 100%;
-    opacity: 0;
+    transform: translateY(0%);
 
-    transition-property: background-color, opacity;
+    transition-property: transform;
     transition-duration: var(--t-d);
     transition-timing-function: var(--t-t-f);
 }
@@ -639,9 +705,10 @@ opacity: 1;
     left: 24px;
     bottom: 63px;
     right: 24px;
-    opacity: 0;
+    transform: translateY(134%);
+    z-index: 1;
 
-    transition-property: opacity;
+    transition-property: transform;
     transition-duration: var(--t-d);
     transition-timing-function: var(--t-t-f);
 }
@@ -674,24 +741,38 @@ opacity: 1;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.2);
+
+    transition-property: opacity visibility;
+    transition-duration: var(--t-d);
+    transition-timing-function: var(--t-t-f);
 }
 
 .backdrop.is-hidden{
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
+}
+
+.backdrop.is-hidden .modal{
+    transform: translate(-50%, -50%) scale(2);
 }
 
 .modal{
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(1);
 
     width: 528px;
     height: 581px;
     background: #FFFFFF;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.2);
     border-radius: 4px;
+
+
+    transition-property: transform;
+    transition-duration: var(--t-d);
+    transition-timing-function: var(--t-t-f);
 }
 
 .modal-btn{
